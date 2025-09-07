@@ -23,28 +23,81 @@ sales_data = [
 ]
 
 def total_sales_by_product(data, product_key):
-    """Calculates the total sales of a specific product in 30 days."""
-    pass
+    """Calculates the total sales of a specific product in 20 days."""
+    #Calcula el total de ventas de un producto en específico en 20 días
+    total = 0
+    for day in data:
+        total += day[product_key]
+    return(total) 
+
 
 
 def average_daily_sales(data, product_key):
     """Calculates the average daily sales of a specific product."""
-    pass
+    #Calcula el promedio de las ventas diarias del producto B 
+    total = 0
+    for day in data:
+        total += ((day[product_key])/20)
+    return (total)
+
 
 
 def best_selling_day(data):
     """Finds the day with the highest total sales."""
-    pass
+    #Encuentra el día con el mayor número de ventas
+    total = 0
+    for day in data:
+        total = day["product_a"] + day["product_b"] + day["product_c"]
+    return (total)
+   
 
 
 def days_above_threshold(data, product_key, threshold):
     """Counts how many days the sales of a product exceeded a given threshold."""
-    pass
+    #Contar cuantos días las ventas del producto C superaron un umbral determiando siendo este 300 
+    total = 0
+    for day in data:
+        if day[product_key] > threshold:
+            total += 1
+
 
 
 def top_product(data):
-    """Determines which product had the highest total sales in 30 days."""
-    pass
+    """Determines which product had the highest total sales in 20 days."""
+    #Determinar qué producto tuvo la mayor venta en 20 días 
+    if not data:
+        return None
+
+    product_totals = {}
+
+    for daily_data in data:
+        for key, value in daily_data.items():
+            if key.startswith("product_"):
+                if key not in product_totals:
+                    product_totals[key] = 0
+                product_totals[key] += value
+
+    if not product_totals:
+        return None
+
+    best_product = None
+    max_sales = -1
+
+    for product, total_sales in product_totals.items():
+        if total_sales > max_sales:
+            max_sales = total_sales
+            best_product = product
+
+    return best_product
+
+
+
+# Function tests
+print("Total sales of product_a:", total_sales_by_product(sales_data, "product_a"))
+print("Average daily sales of product_b:", average_daily_sales(sales_data, "product_b"))
+print("Day with highest total sales:", best_selling_day(sales_data))
+print("Days when product_c exceeded 300 sales:", days_above_threshold(sales_data, "product_c", 300))
+print("Product with highest total sales:", top_product(sales_data))
 
 
 
